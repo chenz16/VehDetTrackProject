@@ -61,7 +61,7 @@ I did not use spatial (color) features as i found they are not very helpful to t
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using color histogram and HOG features. I also tried different combination. In most of case, the prediction accuacy in test data set could reach 98-99%. 
+I trained a linear SVM using color histogram and HOG features. I also tried different combinations. In most of the cases, the prediction accuacy in test data set could reach 98-99%. 
 
 ### Sliding Window Search
 
