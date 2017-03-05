@@ -137,7 +137,7 @@ Ultimately I searched on mutiple scale windows using YCrCb 3-channel HOG feature
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 
-Here's a [link to my video result](/test_video_VehTrack.mp4)
+Here's a [link to my video result](/project_video_VehTrack.mp4)
 
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -156,8 +156,6 @@ Here is the code sample:
     heatmap = apply_threshold(heatmap, 2.3)
     labels = label(heatmap)
     image = draw_labeled_bboxes(draw_image, labels)
-
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
 ### Here are six frames and their corresponding heatmaps:
 
@@ -192,3 +190,5 @@ In order to reduce the number of false positive and make the detection more robu
 2) combine the current and the last step detection. The assumption here is an object (here vehicle) in a frame would not move too much in the next frame (considering fps her = 25). The heatmap in last frame could be used as voter of current frame detection. Again, proper threshold  should be applied. 
 
 3) when I draw the final bounding box, I also removed very small box. The small box is due to the voting mechanism we used. Sometime, voting mechanism yields small area when the detection is positive, which are not trusted as vehicle detection in most cases.
+
+Even though i spent a lot time to improve the robustness, there are still several false positive detections in the submission project video. Due to time constraint, i am not able to tune them 100% perfect. One interesting take-away from this project would be exploring deep neural network to detect the vehicle.
