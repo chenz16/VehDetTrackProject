@@ -3,17 +3,17 @@
 ## 1. Submission packages
 ### Code folder:
 
-VehTracking.py  - script to process sample images for vehicle detection and tracking
+[VehTracking.py](/Code/VehTracking.py)  - script to process sample images for vehicle detection and tracking
 
-pipe_line.py -  pipe line to process video for vehicle detection and tracking
+[pipe_line.py](/Code/pipe_line.py) -  pipe line to process video for vehicle detection and tracking
 
-model.py - script to read labeled training data, extract training data features, normalize data, train SVM model, and save model parameters.  
+[model.py](/Code/model.py) - script to read labeled training data, extract training data features, normalize data, train SVM model, and save model parameters.  
 
-process.py -  define the core functions to process images for vehicle detection and tracking
+[process.py](/Code/process.py) -  define the core functions to process images for vehicle detection and tracking
 
-config.py - define basic input and output source/address of image process. 
+[config.py](/Code/config.py) - define basic input and output source/address of image process. 
 
-visualization.py - visualize and save processed images.
+[visualization.py](/Code/visualization.py) - visualize and save processed images.
 
 writeup_report/README - Explain what is included for the submission and how it is done. 
 
