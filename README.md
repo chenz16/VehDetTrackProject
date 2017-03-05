@@ -24,7 +24,7 @@ Contain all the images shown in this wrap-up.
 
 project submission video which overlays detected vehicle bounding box to original images/video
 
-### [test_video_VehTrack.mp4](../test_video_VehTrack.mp4)
+### [test_video_VehTrack.mp4](./test_video_VehTrack.mp4)
 
 Project sample video which overlays detected vehicle bounding box to original images/video
 
