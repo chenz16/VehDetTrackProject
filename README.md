@@ -1,7 +1,7 @@
 # VehDetTrackProject
 
 ## 1. Submission packages
-### Code folder:
+### [Code folder](./Code):
 
 [VehTracking.py](/Code/VehTracking.py)  - script to process sample images for vehicle detection and tracking
 
