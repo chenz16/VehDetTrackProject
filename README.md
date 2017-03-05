@@ -116,12 +116,11 @@ For details, please refer to the code in ![alt txt](/Code/model.py)
 
 There are several key steps to implement a sliding window approach:
 
-    1) in general, the search space is only limited to (roughly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
+1) in general, the search space is only limited to (roughly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
    
-    2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a larger window for the near bottom of a image and apply smaller window near the middle of y span. This method is applied through `windows_yrestriction` in process.py ![alt txt](/Code/process.py)
+2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a larger window for the near bottom of a image and apply smaller window near the middle of y span. This method is applied through `windows_yrestriction` in process.py ![alt txt](/Code/process.py)
    
-    3) at a given window size and searching space in a image, get the windows left up corner and bottom right corner points.
-    This function is performed by `windows_yrestriction` which is shown as follows:
+3) at a given window size and searching space in a image, get the windows left up corner and bottom right corner points. This function is performed by `windows_yrestriction` which is shown as follows:
    
     def windows_yrestriction(window_size_MinMax, y_start_stop, window_size_delt):
 
