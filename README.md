@@ -16,7 +16,7 @@ visualization.py - visualize and save processed images.
 writeup_report/README - Explain what is included for the submission and how it is done. 
 
 ### output_images folder
-Contain all the images shown in this warp-up. 
+Contain all the images shown in this wrap-up. 
 
 ### project_video_VehTrack.mp4
 
@@ -187,8 +187,8 @@ When proper color space is selected (here YCrCb), the SVM is able to capture the
 
 In order to reduce the number of false positive and make the detection more robust, additional voting mechanisms are employed:
 
-#####1) apply proper threshold value to eliminate those false positive.  SVM in sliding windows may occasionally detects something, which are not vehicles.  These detections are not consistent when the windows size changes. For correct positive detection, as long as the windows (at least) partially contain the vehicle, the SVM is able to predict in most of the cases.   Thus we can apply threshold  to pick the area to which most of sliding windows say “yes”.
+1) apply proper threshold value to eliminate those false positive.  SVM in sliding windows may occasionally detects something, which are not vehicles.  These detections are not consistent when the windows size changes. For correct positive detection, as long as the windows (at least) partially contain the vehicle, the SVM is able to predict in most of the cases.   Thus we can apply threshold  to pick the area to which most of sliding windows say “yes”.
 
-#####2) combine the current and the last step detection. The assumption here is an object (here vehicle) in a frame would not move too much in the next frame (considering fps her = 25). The heatmap in last frame could be used as voter of current frame detection. Again, proper threshold  should be applied. 
+2) combine the current and the last step detection. The assumption here is an object (here vehicle) in a frame would not move too much in the next frame (considering fps her = 25). The heatmap in last frame could be used as voter of current frame detection. Again, proper threshold  should be applied. 
 
-#####3) when I draw the final bounding box, I also removed very small box. The small box is due to the voting mechanism we used. Sometime, voting mechanism yields small area when the detection is positive. In most of cases, these small areas are not trusted as vehicle detection.
+3) when I draw the final bounding box, I also removed very small box. The small box is due to the voting mechanism we used. Sometime, voting mechanism yields small area when the detection is positive. In most of cases, these small areas are not trusted as vehicle detection.
