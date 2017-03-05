@@ -157,8 +157,6 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ### Here are six frames and their corresponding heatmaps:
 
-![alt text][image5]
-
 ### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
 ![alt text](/output_images/0heatmap.jpg)
 ![alt text](/output_images/1heatmap.jpg)
@@ -181,4 +179,11 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+When proper color space is selected (here YCrCb), the SVM is able to capture the vehicle through sliding window technique. However, the original SVM detection has a lots of false positive detection. 
+
+In order to reduce the number of false positive and make the detection more robust, additional voting mechanisim are employed:
+
+        1) apply proper threshold value to elimate those detections in which the SVM in sliding windows may ocationaly detects something but not the vehicle 
+        2) combine the current step detection and the one of last step. The assumption here is vehicle in a frame would not move too much in next frame (considering fps her = 25). The heatmap in last frame could be use as voters of current frame detection. Again, proper threshold value should be applied 
+        3) when we draw the final bounding box, very small box is removed to elimate the fasle positive detection. The mechanism of false positive small box is due to vote mechanism we used. Sometime, voting mechanism yield small area when the detection is positve. Apparanetly, these small areas not not trusted as vehicle detection .
+
