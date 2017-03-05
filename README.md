@@ -201,7 +201,6 @@ Here is the code sample:
 
 ### Here are six frames and their corresponding heatmaps:
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
 ![alt text](/output_images/0heatmap.jpg)
 ![alt text](/output_images/1heatmap.jpg)
 ![alt text](/output_images/2heatmap.jpg)
