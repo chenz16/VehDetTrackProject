@@ -3,7 +3,7 @@
 ## 1. Submission packages
 ### Code folder:
 
-vehTracking.py  - script to process sample images for vehicle detection and tracking
+VehTracking.py  - script to process sample images for vehicle detection and tracking
 
 pipe_line.py -  pipe line to process video for vehicle detection and tracking
 
