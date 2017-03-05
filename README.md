@@ -111,7 +111,7 @@ There are several kety steps to implement a sliding window approach:
 
 An visualization of search windows is as the follows:
 
-![alt text][image3]
+![alt text](/output_images/Sliding_window.jpg)
 
 Note: I did not use the method of HOG subsampling, which was introducted in the course material. HOG subsmapling should reduce the computing time of extracting HOG feature for the vehicle detection. 
 
