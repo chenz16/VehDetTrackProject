@@ -5,13 +5,13 @@
 ## 1. Submission packages
 ### Code folder:
 
-vehTracking.py: script to process sample images for vehicle tracking, which automatically save processed image to specified folder. 
+vehTracking.py: script to process sample images for vehicle detection and tracking
 
 pipe_line.py -  pipe line to process video for vehicle detection and tracking
 
 process.py -  Defines the core functions to process images for vehicle detection and tracking
 
-configure.py- define basic input and output source/address of image process. 
+config.py- define basic input and output source/address of image process. 
 
 writeup_report - Explain what is included for the submission and how it is done. 
 
@@ -22,42 +22,14 @@ writeup_report - Explain what is included for the submission and how it is done.
 
 project submission video which overlays detected vehicle bounding box to original images/video
 
-**Vehicle Detection Project**
+## 2. Go through rubrics
 
-The goals / steps of this project are the following:
 
-* Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier
-* Optionally, you can also apply a color transform and append binned color features, as well as histograms of color, to your HOG feature vector. 
-* Note: for those first two steps don't forget to normalize your features and randomize a selection for training and testing.
-* Implement a sliding-window technique and use your trained classifier to search for vehicles in images.
-* Run your pipeline on a video stream (start with the test_video.mp4 and later implement on full project_video.mp4) and create a heat map of recurring detections frame by frame to reject outliers and follow detected vehicles.
-* Estimate a bounding box for vehicles detected.
+### Histogram of Oriented Gradients (HOG)
 
-[//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
+#### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
-###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
----
-###Writeup / README
-
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
-
-###Histogram of Oriented Gradients (HOG)
-
-####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
-
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+The code for this step is contained in the function "get_hog_features `some_file.py`
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
@@ -70,23 +42,33 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 ![alt text][image2]
 
-####2. Explain how you settled on your final choice of HOG parameters.
+#### 2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters and...
+I tried different color space options and there is a little difference between each other. Depending on training data set, one may perform better than others, but worse in different data set. (i also tried both small and large data set). Here i chose HSV. 
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+For other paramters, I used the same as the course material. Here they are:
 
-I trained a linear SVM using...
+  color_space = 'HSV' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
+  orient = 9  # HOG orientations
+  pix_per_cell = 8 # HOG pixels per cell
+  cell_per_block = 2 # HOG cells per block
+  hog_channel = "ALL" # Can be 0, 1, 2, or "ALL"
+  spatial_size = (16, 16) # Spatial binning dimensions
 
-###Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+
+I trained a linear SVM using spatial features, color histogram and HOG features. I also tried different combination. In most of case, the prediction accuacy in test data set could reach 98-99%. 
+
+### Sliding Window Search
+
+#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
 
 ![alt text][image3]
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
