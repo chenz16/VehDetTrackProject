@@ -119,13 +119,12 @@ Note: I did not use the method of HOG subsampling, which was introducted in the 
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text](/output_images/0.jpg)
-![alt text](/output_images/1.jpg)
-![alt text](/output_images/2.jpg)
-![alt text](/output_images/3.jpg)
-![alt text](/output_images/4.jpg)
-![alt text](/output_images/5.jpg)
-![alt text](/output_images/6.jpg)
+![alt text](/output_images/0SVM.jpg)
+![alt text](/output_images/1SVM.jpg)
+![alt text](/output_images/2SVM.jpg)
+![alt text](/output_images/3SVM.jpg)
+![alt text](/output_images/4SVM.jpg)
+![alt text](/output_images/5SVM.jpg)
 
 ### Video Implementation
 
@@ -167,7 +166,6 @@ Here's an example result showing the heatmap from a series of frames of video, t
 ![alt text](/output_images/3heatmap.jpg)
 ![alt text](/output_images/4heatmap.jpg)
 ![alt text](/output_images/5heatmap.jpg)
-![alt text](/output_images/6heatmap.jpg)
 
 ### Here the resulting bounding boxes are drawn :
 ![alt text](/output_images/0.jpg)
@@ -176,7 +174,6 @@ Here's an example result showing the heatmap from a series of frames of video, t
 ![alt text](/output_images/3.jpg)
 ![alt text](/output_images/4.jpg)
 ![alt text](/output_images/5.jpg)
-![alt text](/output_images/6.jpg)
 
 ---
 
