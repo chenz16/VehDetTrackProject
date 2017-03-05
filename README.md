@@ -108,7 +108,7 @@ Finally, the model parameters are saved:
 
     pickle.dump(dist_pickle, open(cfg.Target['models'] + "svc_pickle.p", "wb" ) )
 
-For details, please refer to the code in ![alt txt](/Code/model.py)
+For details, please refer to the code in [model.py](/Code/model.py)
 
 ### Sliding Window Search
 
