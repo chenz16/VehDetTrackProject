@@ -1,9 +1,26 @@
 # VehDetTrackProject
 
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+ AdvancedLaneFind_Submission
 
----
+## 1. Submission packages
+### Code folder:
+
+vehTracking.py: script to process sample images for vehicle tracking, which automatically save processed image to specified folder. 
+
+pipe_line.py -  pipe line to process video for vehicle detection and tracking
+
+process.py -  Defines the core functions to process images for vehicle detection and tracking
+
+configure.py- define basic input and output source/address of image process. 
+
+writeup_report - Explain what is included for the submission and how it is done. 
+
+### output_images folder
+
+
+### project_video_VehTrack.mp4
+
+project submission video which overlays detected vehicle bounding box to original images/video
 
 **Vehicle Detection Project**
 
