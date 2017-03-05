@@ -183,7 +183,7 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-When proper color space is selected (here YCrCb), the SVM is able to capture the vehicle through sliding window technique. However, the original SVM detection has a lots of false positive detections. 
+When proper color space is selected (here YCrCb), the SVM is able to capture the vehicle through sliding window technique. However, the prediction from SVM contains a lots of false positive detections. 
 
 In order to reduce the number of false positive and make the detection more robust, additional voting mechanisms are employed:
 
@@ -191,4 +191,4 @@ In order to reduce the number of false positive and make the detection more robu
 
 2) combine the current and the last step detection. The assumption here is an object (here vehicle) in a frame would not move too much in the next frame (considering fps her = 25). The heatmap in last frame could be used as voter of current frame detection. Again, proper threshold  should be applied. 
 
-3) when I draw the final bounding box, I also removed very small box. The small box is due to the voting mechanism we used. Sometime, voting mechanism yields small area when the detection is positive. In most of cases, these small areas are not trusted as vehicle detection.
+3) when I draw the final bounding box, I also removed very small box. The small box is due to the voting mechanism we used. Sometime, voting mechanism yields small area when the detection is positive, which are not trusted as vehicle detection in most cases.
