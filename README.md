@@ -3,22 +3,29 @@
 ## 1. Submission packages
 ### Code folder:
 
-vehTracking.py: script to process sample images for vehicle detection and tracking
+vehTracking.py  - script to process sample images for vehicle detection and tracking
 
 pipe_line.py -  pipe line to process video for vehicle detection and tracking
 
-process.py -  Defines the core functions to process images for vehicle detection and tracking
+process.py -  define the core functions to process images for vehicle detection and tracking
 
-config.py- define basic input and output source/address of image process. 
+config.py - define basic input and output source/address of image process. 
+
+visualization.py - visualize and save processed images.
 
 writeup_report/README - Explain what is included for the submission and how it is done. 
 
 ### output_images folder
-
+Contain all the images shown in this warp-up. 
 
 ### project_video_VehTrack.mp4
 
 project submission video which overlays detected vehicle bounding box to original images/video
+
+### test_video_VehTrack.mp4
+
+Project sample video which overlays detected vehicle bounding box to original images/video
+
 
 ## 2. Go through rubrics
 
@@ -27,7 +34,7 @@ project submission video which overlays detected vehicle bounding box to origina
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in the function "get_hog_features `some_file.py`
+The code for this step is contained in the function "get_hog_features in `some_file.py`. Here is ![alt taxt](/Code/process.py)
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
@@ -37,12 +44,11 @@ I then explored different color spaces and different `skimage.hog()` parameters 
 
 Here is an example using the `YCrCb` color space and HOG parameters of `orientations=18`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
-
 ![Alt text](/output_images/HOG_Features.jpg)
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
-I tried different color space options and there is a little difference between each other. Based on several tries, here are my final choosing:
+I tried different color space options and there is quite difference between each other in terms of detection. Based on several tries, here are my final choosing:
 
     color_space = 'YCrCb' 
   
@@ -54,14 +60,14 @@ I tried different color space options and there is a little difference between e
   
     hog_channel = "ALL" # Can be 0, 1, 2, or "ALL"
   
-Using "YCrCb" as color space can easily detect the right side white car.  I tried differnt orient number. I finally choose 18 which gives decent result. Increasing the number of orient significantly increases the features numbers and therefore, the computing time for vehicle detection and tracking. 
+Using "YCrCb" as color space can easily detect the right side white car.  I tried differnt orient number - 9 , 12, 18. I finally choose 18 which gives decent result. Increasing the number of orient increases the features numbers and therefore, the computing time for vehicle detection and tracking.  There is also risk of overfitting to increase the feature number as our total training data is around 14,xxx.  
 
-I did not use spatial (color) features as i found they are not very helpful to the problem. 
+I did not use spatial features as i found they are not very helpful to the problem. 
 
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using color histogram and HOG features. I also tried different combinations. In most of the cases, the prediction accuracy in test data set could reach 98-99%. 
+I tried different combinations of spatial features, color histogram, and HOG with different parameters. In most of the cases, the prediction accuracy in the test data set could reach 98-99%.  However, they may perform differently in the real vehicle detection problem.  Finally, i chose a linear SVM using color histogram and HOG features.
 
 ### Sliding Window Search
 
@@ -69,11 +75,12 @@ I trained a linear SVM using color histogram and HOG features. I also tried diff
 
 There are several key steps to implement a sliding window approach:
 
-####1) in general the search space is only limited to (roughly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
+####1) in general, the search space is only limited to (roughly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
    
-####2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a large window for the near bottom space and apply small window near the middle y space. This method is applied through "windows_yrestriction" in process.py
+####2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a larger window for the near bottom of a image and apply smaller window near the middle of y span. This method is applied through `windows_yrestriction` in process.py ![alt txt](/Code/process.py)
    
-####3) at a given window size and searching space in a image, get the windows left up corner and bottom right corner point. This function is performed by:
+####3) at a given window size and searching space in a image, get the windows left up corner and bottom right corner points.
+This function is performed by `windows_yrestriction` which is shown as follows:
    
    def windows_yrestriction(window_size_MinMax, y_start_stop, window_size_delt):
 
@@ -113,11 +120,11 @@ An visualization of search windows is as the follows:
 
 ![alt text](/output_images/Sliding_window.jpg)
 
-Note: I did not use the method of HOG subsampling, which was introduced in the course material. HOG subsmapling should reduce the computing time of extracting HOG feature for the vehicle detection. 
+Notice: I did not use the method of HOG subsampling, which was introduced in the course material. HOG subsmapling should reduce the computing time of extracting HOG feature for the vehicle detection. 
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately I searched on mutiple scale windows using YCrCb 3-channel HOG features plus histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
 ![alt text](/output_images/0SVM.jpg)
 ![alt text](/output_images/1SVM.jpg)
@@ -135,7 +142,7 @@ Here's a [link to my video result](/test_video_VehTrack.mp4)
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video. I also created an object 'LastFrame' from the class 'FrameInfo' which records the heatmap information from the last step.  From the positive detections I created a heatmap, which is fused with last step heatmap. I then applied a threshold to heatmap.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.
+I recorded the positions of positive detections in each frame of the video. I also created an object 'LastFrame' from the class 'FrameInfo' which recorded the heatmap information from the last step.  From the positive detections, I created a heatmap, which is fused with last step heatmap. I then applied a threshold to heatmap.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.
 
 Here is the code sample:
 
@@ -151,9 +158,6 @@ Here is the code sample:
     image = draw_labeled_bboxes(draw_image, labels)
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
-
-
-
 
 ### Here are six frames and their corresponding heatmaps:
 
@@ -179,10 +183,12 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-When proper color space is selected (here YCrCb), the SVM is able to capture the vehicle through sliding window technique. However, the original SVM detection has a lots of false positive detection. 
+When proper color space is selected (here YCrCb), the SVM is able to capture the vehicle through sliding window technique. However, the original SVM detection has a lots of false positive detections. 
 
 In order to reduce the number of false positive and make the detection more robust, additional voting mechanisms are employed:
 
-        1) apply proper threshold value to eliminate those false positive.  SVM in sliding windows may occasionally detects something, which are not vehicles.  These detections are not consistent when the windows size changes. For correct positive detection, as long as the windows (at least) partially contain the vehicle, the SVM is able to predict in most of the cases.   Thus we can apply threshold  to pick the area  to which  most of sliding windows say “yes”.
-        2) combine the current and the last step detection. The assumption here is an object (here vehicle) in a frame would not move too much in the next frame (considering fps her = 25). The heatmap in last frame could be used as voter of current frame detection. Again, proper threshold  should be applied 
-        3) when we draw the final bounding box, very small box is removed to eliminate the false positive detection. The small box is due to the voting mechanism we used. Sometime, voting mechanism yields small area when the detection is positive. Apparently, these small areas are not trusted as vehicle detection.
+#####1) apply proper threshold value to eliminate those false positive.  SVM in sliding windows may occasionally detects something, which are not vehicles.  These detections are not consistent when the windows size changes. For correct positive detection, as long as the windows (at least) partially contain the vehicle, the SVM is able to predict in most of the cases.   Thus we can apply threshold  to pick the area to which most of sliding windows say “yes”.
+
+#####2) combine the current and the last step detection. The assumption here is an object (here vehicle) in a frame would not move too much in the next frame (considering fps her = 25). The heatmap in last frame could be used as voter of current frame detection. Again, proper threshold  should be applied. 
+
+#####3) when I draw the final bounding box, I also removed very small box. The small box is due to the voting mechanism we used. Sometime, voting mechanism yields small area when the detection is positive. In most of cases, these small areas are not trusted as vehicle detection.
