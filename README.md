@@ -61,19 +61,19 @@ I did not use spatial (color) features as i found they are not very helpful to t
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using color histogram and HOG features. I also tried different combinations. In most of the cases, the prediction accuacy in test data set could reach 98-99%. 
+I trained a linear SVM using color histogram and HOG features. I also tried different combinations. In most of the cases, the prediction accuracy in test data set could reach 98-99%. 
 
 ### Sliding Window Search
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-There are several kety steps to implement a sliding window approach:
+There are several key steps to implement a sliding window approach:
 
-   ####1) in general the search space is only limited to (rougly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
+####1) in general the search space is only limited to (roughly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
    
-   ####2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a large window for the near bottom space and apply small window near the middle y space. This method is applied through "windows_yrestriction" in process.py
+####2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a large window for the near bottom space and apply small window near the middle y space. This method is applied through "windows_yrestriction" in process.py
    
-   ####3) at a given window size and searching space in a image, get the windows left up corner and bottom right corner point. This function is performed by:
+####3) at a given window size and searching space in a image, get the windows left up corner and bottom right corner point. This function is performed by:
    
    def windows_yrestriction(window_size_MinMax, y_start_stop, window_size_delt):
 
@@ -113,7 +113,7 @@ An visualization of search windows is as the follows:
 
 ![alt text](/output_images/Sliding_window.jpg)
 
-Note: I did not use the method of HOG subsampling, which was introducted in the course material. HOG subsmapling should reduce the computing time of extracting HOG feature for the vehicle detection. 
+Note: I did not use the method of HOG subsampling, which was introduced in the course material. HOG subsmapling should reduce the computing time of extracting HOG feature for the vehicle detection. 
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
@@ -181,9 +181,8 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 When proper color space is selected (here YCrCb), the SVM is able to capture the vehicle through sliding window technique. However, the original SVM detection has a lots of false positive detection. 
 
-In order to reduce the number of false positive and make the detection more robust, additional voting mechanisim are employed:
+In order to reduce the number of false positive and make the detection more robust, additional voting mechanisms are employed:
 
-        1) apply proper threshold value to elimate those detections in which the SVM in sliding windows may ocationaly detects something but not the vehicle 
-        2) combine the current step detection and the one of last step. The assumption here is vehicle in a frame would not move too much in next frame (considering fps her = 25). The heatmap in last frame could be use as voters of current frame detection. Again, proper threshold value should be applied 
-        3) when we draw the final bounding box, very small box is removed to elimate the fasle positive detection. The mechanism of false positive small box is due to vote mechanism we used. Sometime, voting mechanism yield small area when the detection is positve. Apparanetly, these small areas not not trusted as vehicle detection .
-
+        1) apply proper threshold value to eliminate those false positive.  SVM in sliding windows may occasionally detects something, which are not vehicles.  These detections are not consistent when the windows size changes. For correct positive detection, as long as the windows (at least) partially contain the vehicle, the SVM is able to predict in most of the cases.   Thus we can apply threshold  to pick the area  to which  most of sliding windows say “yes”.
+        2) combine the current and the last step detection. The assumption here is an object (here vehicle) in a frame would not move too much in the next frame (considering fps her = 25). The heatmap in last frame could be used as voter of current frame detection. Again, proper threshold  should be applied 
+        3) when we draw the final bounding box, very small box is removed to eliminate the false positive detection. The small box is due to the voting mechanism we used. Sometime, voting mechanism yields small area when the detection is positive. Apparently, these small areas are not trusted as vehicle detection.
