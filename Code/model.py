@@ -1,3 +1,14 @@
+'''
+SVM model:
+1) read labeled training data
+2) extract training data features
+3) normalize data
+4) train SVM model
+5) save model parameters.
+'''
+
+
+
 import matplotlib.image as mpimg
 import numpy as np
 import cv2

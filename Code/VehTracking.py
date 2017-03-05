@@ -69,8 +69,26 @@ for file in images:
     heatmap = add_heat(heatmap, hot_windows)
     heatmap = apply_threshold(heatmap, 5)
     labels = label(heatmap)
+
     image = draw_labeled_bboxes(draw_image, labels)
+
+    f0,(ax1, ax2) = plt.subplots(2,1, figsize=(20,10))
+    ax1.imshow(out_img)
+    ax1.set_title('Raw Detection')
+    ax2.imshow(heatmap, cmap = 'gray')
+    ax2.set_title('Image Heatmap')
+    f0.savefig('../output_images/' + str(indx) + 'heatmap.jpg')
+
+
     f,ax = plt.subplots(1,1, figsize=(20,10))
     ax.imshow(image)
     f.savefig('../output_images/' + str(indx) + '.jpg')
+
+
+    f3,ax = plt.subplots(1,1, figsize=(20,10))
+    ax.imshow(out_img)
+    ax.set_title('Results from SVM prediction')
+    f3.savefig('../output_images/' + str(indx) + 'SVM.jpg')
+
+
     indx +=1

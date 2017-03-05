@@ -74,7 +74,7 @@ def VehTrack(image):
     else:
         pass
 
-    heatmap = apply_threshold(heatmap, 2)
+    heatmap = apply_threshold(heatmap, 2.3)
     labels = label(heatmap)
     image = draw_labeled_bboxes(draw_image, labels)
     #image = draw_labeled_bboxes(out_img, labels)
@@ -83,17 +83,16 @@ def VehTrack(image):
     LastFrame.heatmap = heatmap
     return image
 
-
+'''
 output = '../project_video_VehTrack.mp4'
 clip = VideoFileClip('../project_video.mp4')
 
 VehTrack = clip.fl_image(VehTrack)
 VehTrack.write_videofile(output, audio=False)
-
 '''
-output = '../test_video_VehTrack.mp4'
+
+output = '../test_video_Heatmap.mp4'
 clip = VideoFileClip('../test_video.mp4')
 
 VehTrack = clip.fl_image(VehTrack)
 VehTrack.write_videofile(output, audio=False)
-'''
