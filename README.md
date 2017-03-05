@@ -36,7 +36,7 @@ Project sample video which overlays detected vehicle bounding box to original im
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in the function "get_hog_features in `some_file.py`. Here is ![alt taxt](/Code/process.py)
+The code for this step is contained in the function "get_hog_features in [`process.py`](/Code/process.py)
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
@@ -118,7 +118,7 @@ There are several key steps to implement a sliding window approach:
 
 1) in general, the search space is only limited to (roughly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
    
-2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a larger window for the near bottom of a image and apply smaller window near the middle of y span. This method is applied through `windows_yrestriction` in process.py ![alt txt](/Code/process.py)
+2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a larger window for the near bottom of a image and apply smaller window near the middle of y span. This method is applied through `windows_yrestriction` in [process.py](/Code/process.py)
    
 3) at a given window size and searching space in a image, get the windows left up corner and bottom right corner points. This function is performed by `windows_yrestriction` which is shown as follows:
    
@@ -177,7 +177,9 @@ Ultimately I searched on mutiple scale windows using YCrCb 3-channel HOG feature
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 
-Here's a [link to my video result](/project_video_VehTrack.mp4)
+Here's a [link to project video result](/project_video_VehTrack.mp4)
+
+Here's a [link to test video result](/test_video_VehTrack.mp4)
 
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
