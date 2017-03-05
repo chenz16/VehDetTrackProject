@@ -126,19 +126,35 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus hist
 ![alt text](/output_images/4.jpg)
 ![alt text](/output_images/5.jpg)
 ![alt text](/output_images/6.jpg)
----
 
 ### Video Implementation
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./test_video_VehTrack.mp4)
+
+Here's a [link to my video result](/test_video_VehTrack.mp4)
 
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+I recorded the positions of positive detections in each frame of the video. I also created an object 'LastFrame' from the class 'FrameInfo' which records the heatmap information from the last step.  From the positive detections I created a heatmap, which is fused with last step heatmap. I then applied a threshold to heatmap.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.
+
+Here is the code sample:
+
+    heatmap = np.zeros((draw_image.shape[0], draw_image.shape[1]))
+    heatmap = add_heat(heatmap, hot_windows)
+    if LastFrame.First is False:
+        heatmap = 0.5*heatmap + 0.6*LastFrame.heatmap
+    else:
+        pass
+
+    heatmap = apply_threshold(heatmap, 2.3)
+    labels = label(heatmap)
+    image = draw_labeled_bboxes(draw_image, labels)
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+
+
+
 
 ### Here are six frames and their corresponding heatmaps:
 
