@@ -67,10 +67,13 @@ I trained a linear SVM using color histogram and HOG features. I also tried diff
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-There are several kety steps to implement a sliding window approach
-   #### 1) in general the search space is only limited to (rougly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
-   #### 2) the searching space is further limited to a one space depending on the size of the windows. This method is applied through "windows_yrestriction" in process.py
-   #### 1) at a given window size and searching space in a image, get the windows left up corner and bottom right corner point. This function is performed by:
+There are several kety steps to implement a sliding window approach:
+
+   ####1) in general the search space is only limited to (rougly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
+   
+   ####2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a large window for the near bottom space and apply small window near the middle y space. This method is applied through "windows_yrestriction" in process.py
+   
+   ####3) at a given window size and searching space in a image, get the windows left up corner and bottom right corner point. This function is performed by:
    
    def windows_yrestriction(window_size_MinMax, y_start_stop, window_size_delt):
 
@@ -105,15 +108,24 @@ There are several kety steps to implement a sliding window approach
         windows_size.append((window_xsize, window_ysize))
 
     return windows_size, ystarts, ystops
-  
+
+An visualization of search windows is as the follows:
 
 ![alt text][image3]
+
+Note: I did not use the method of HOG subsampling, which was introducted in the course material. HOG subsmapling should reduce the computing time of extracting HOG feature for the vehicle detection. 
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][image4]
+![alt text](/output_images/0.jpg)
+![alt text](/output_images/1.jpg)
+![alt text](/output_images/2.jpg)
+![alt text](/output_images/3.jpg)
+![alt text](/output_images/4.jpg)
+![alt text](/output_images/5.jpg)
+![alt text](/output_images/6.jpg)
 ---
 
 ### Video Implementation
