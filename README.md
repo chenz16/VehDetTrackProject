@@ -20,7 +20,7 @@ writeup_report/README - Explain what is included for the submission and how it i
 ### [output_images folder](/output_images)
 Contain all the images shown in this wrap-up. 
 
-### [project_video_VehTrack.mp4](../project_video_VehTrack.mp4)
+### [project_video_VehTrack.mp4](./project_video_VehTrack.mp4)
 
 project submission video which overlays detected vehicle bounding box to original images/video
 
