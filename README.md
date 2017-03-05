@@ -17,7 +17,7 @@
 
 writeup_report/README - Explain what is included for the submission and how it is done. 
 
-### output_images folder
+### [output_images folder](/output_images)
 Contain all the images shown in this wrap-up. 
 
 ### project_video_VehTrack.mp4
