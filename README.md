@@ -1,7 +1,5 @@
 # VehDetTrackProject
 
- AdvancedLaneFind_Submission
-
 ## 1. Submission packages
 ### Code folder:
 
