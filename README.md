@@ -7,6 +7,8 @@ VehTracking.py  - script to process sample images for vehicle detection and trac
 
 pipe_line.py -  pipe line to process video for vehicle detection and tracking
 
+model.py - script to read labeled training data, extract training data features, normalize data, train SVM model, and save model parameters.  
+
 process.py -  define the core functions to process images for vehicle detection and tracking
 
 config.py - define basic input and output source/address of image process. 
@@ -67,7 +69,46 @@ I did not use spatial features as i found they are not very helpful to the probl
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I tried different combinations of spatial features, color histogram, and HOG with different parameters. In most of the cases, the prediction accuracy in the test data set could reach 98-99%.  However, they may perform differently in the real vehicle detection problem.  Finally, i chose a linear SVM using color histogram and HOG features.
+I tried different combinations of spatial features, color histogram, and HOG with different parameters. In most of the cases, the prediction accuracy in the test data set could reach 98-99%.  However, they may perform differently in the real vehicle detection problem.  At the end, i chose a linear SVM using color histogram and HOG features.
+
+The feature is normalized through the following operation:
+
+    X_scaler = StandardScaler().fit(X)
+    # Apply the scaler to X
+    scaled_X = X_scaler.transform(X)
+    
+The original data is shuffled and split to training data and test data. 
+     
+        # Split up data into randomized training and test sets
+        rand_state = np.random.randint(0, 100)
+        X_train, X_test, y_train, y_test = train_test_split(
+        scaled_X, y, test_size=0.2, random_state=rand_state)
+
+The model is then trained and the prediction accuacy is calcuated:
+
+    svc.fit(X_train, y_train)
+    print('Test Accuracy of SVC = ', round(svc.score(X_test, y_test), 4))
+
+Finally, the model parameters are saved:
+
+    import pickle
+    dist_pickle={};
+    dist_pickle["svc"] =svc
+    dist_pickle["scaler"] = X_scaler
+    dist_pickle["orient"]=orient
+    dist_pickle["pix_per_cell"]=pix_per_cell
+    dist_pickle["cell_per_block"]=cell_per_block
+    dist_pickle["spatial_size"] =spatial_size
+    dist_pickle["hist_bins"] =hist_bins
+    dist_pickle["color_space"] = color_space
+    dist_pickle["hog_channel"] = hog_channel
+    dist_pickle["spatial_feat"] = spatial_feat
+    dist_pickle["hist_feat"] = hist_feat
+    dist_pickle["hog_feat"] = hog_feat
+
+    pickle.dump(dist_pickle, open(cfg.Target['models'] + "svc_pickle.p", "wb" ) )
+
+For details, please refer to the code in ![alt txt](/Code/model.py)
 
 ### Sliding Window Search
 
