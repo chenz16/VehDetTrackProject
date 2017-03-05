@@ -46,7 +46,7 @@ I tried different color space options and there is a little difference between e
 
     color_space = 'YCrCb' 
   
-    orient = 12  # HOG orientations
+    orient = 18  # HOG orientations
   
     pix_per_cell = 8 # HOG pixels per cell
   
