@@ -11,7 +11,7 @@ process.py -  Defines the core functions to process images for vehicle detection
 
 config.py- define basic input and output source/address of image process. 
 
-writeup_report - Explain what is included for the submission and how it is done. 
+writeup_report/README - Explain what is included for the submission and how it is done. 
 
 ### output_images folder
 
@@ -31,7 +31,7 @@ The code for this step is contained in the function "get_hog_features `some_file
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-![alt text][image1]
+![alt text][./out_images/TrainingSample.jpg]
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
