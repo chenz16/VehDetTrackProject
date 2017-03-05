@@ -116,46 +116,46 @@ For details, please refer to the code in ![alt txt](/Code/model.py)
 
 There are several key steps to implement a sliding window approach:
 
-####1) in general, the search space is only limited to (roughly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
+    1) in general, the search space is only limited to (roughly speaking) bottom half of the image space. This is defined by: y_start_stop = (360, 656)
    
-####2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a larger window for the near bottom of a image and apply smaller window near the middle of y span. This method is applied through `windows_yrestriction` in process.py ![alt txt](/Code/process.py)
+    2) the searching space is further limited to a smaller one depending on the size of the windows. In general, we only want to apply a larger window for the near bottom of a image and apply smaller window near the middle of y span. This method is applied through `windows_yrestriction` in process.py ![alt txt](/Code/process.py)
    
-####3) at a given window size and searching space in a image, get the windows left up corner and bottom right corner points.
-This function is performed by `windows_yrestriction` which is shown as follows:
+    3) at a given window size and searching space in a image, get the windows left up corner and bottom right corner points.
+    This function is performed by `windows_yrestriction` which is shown as follows:
    
-   def windows_yrestriction(window_size_MinMax, y_start_stop, window_size_delt):
+    def windows_yrestriction(window_size_MinMax, y_start_stop, window_size_delt):
 
-    windows_size = []
-    window_xsize_min = window_size_MinMax[0]
-    window_xsize_max = window_size_MinMax[1]
-    window_ysize_max = window_xsize_max
-    window_ysize_min = window_xsize_min
+        windows_size = []
+        window_xsize_min = window_size_MinMax[0]
+        window_xsize_max = window_size_MinMax[1]
+        window_ysize_max = window_xsize_max
+        window_ysize_min = window_xsize_min
 
-    window_xsize_delt = window_size_delt
-    window_ysize_delt = window_size_delt
+        window_xsize_delt = window_size_delt
+        window_ysize_delt = window_size_delt
 
-    window_xlist = np.arange(window_xsize_min, window_xsize_max,window_xsize_delt)
-    window_ylist = np.arange(window_ysize_min, window_ysize_max,window_ysize_delt)
+        window_xlist = np.arange(window_xsize_min, window_xsize_max,window_xsize_delt)
+        window_ylist = np.arange(window_ysize_min, window_ysize_max,window_ysize_delt)
 
-    b2 = y_start_stop[0]
-    b1 = y_start_stop[1] - 1.5*window_ysize_max
-    a2 = window_xsize_min
-    a1 = window_xsize_max
-    ystarts = (b1-b2)/(a1 - a2) *(window_ylist - a2) + b2
-    ystarts = ystarts.astype(np.int)
+        b2 = y_start_stop[0]
+        b1 = y_start_stop[1] - 1.5*window_ysize_max
+        a2 = window_xsize_min
+        a1 = window_xsize_max
+        ystarts = (b1-b2)/(a1 - a2) *(window_ylist - a2) + b2
+        ystarts = ystarts.astype(np.int)
 
-    b2 = y_start_stop[0] +1.5*window_xsize_min
-    b1 = y_start_stop[1]
-    a2 = window_xsize_min
-    a1 = window_xsize_max
-    ystops = (b1-b2)/(a1 - a2) *(window_ylist - a2) + b2
-    #print(window_ylist)
-    #print('ystarts', ystarts, 'ystops', ystops)
+        b2 = y_start_stop[0] +1.5*window_xsize_min
+        b1 = y_start_stop[1]
+        a2 = window_xsize_min
+        a1 = window_xsize_max
+        ystops = (b1-b2)/(a1 - a2) *(window_ylist - a2) + b2
+        #print(window_ylist)
+        #print('ystarts', ystarts, 'ystops', ystops)
 
-    for window_xsize, window_ysize in zip(window_xlist, window_ylist):
-        windows_size.append((window_xsize, window_ysize))
+        for window_xsize, window_ysize in zip(window_xlist, window_ylist):
+            windows_size.append((window_xsize, window_ysize))
 
-    return windows_size, ystarts, ystops
+        return windows_size, ystarts, ystops
 
 An visualization of search windows is as the follows:
 
