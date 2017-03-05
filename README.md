@@ -44,15 +44,15 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 I tried different color space options and there is a little difference between each other. Based on several tries, here are my final choosing:
 
-  color_space = 'YCrCb' 
+    color_space = 'YCrCb' 
   
-  orient = 18  # HOG orientations
+    orient = 12  # HOG orientations
   
-  pix_per_cell = 8 # HOG pixels per cell
+    pix_per_cell = 8 # HOG pixels per cell
   
-  cell_per_block = 2 # HOG cells per block
+    cell_per_block = 2 # HOG cells per block
   
-  hog_channel = "ALL" # Can be 0, 1, 2, or "ALL"
+    hog_channel = "ALL" # Can be 0, 1, 2, or "ALL"
   
 Using "YCrCb" as color space can easily detect the right side white car.  I tried differnt orient number. I finally choose 18 which gives decent result. Increasing the number of orient significantly increases the features numbers and therefore, the computing time for vehicle detection and tracking. 
 
